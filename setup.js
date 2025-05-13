@@ -1,3 +1,6 @@
+// ==============================
+// PART 1: Basic Setup & Example
+// ==============================
 // Install TypeScript
 // npm install -g typescript
 // Installs the TypeScript compiler globally.
@@ -15,8 +18,9 @@
 //  Create First TS File
 // touch index.ts
 // Inside index.ts, write:
-// let message: string = "Hello TypeScript!";
-// console.log(message);
+// Declaring a string variable with explicit type annotation
+var message = "Hello TypeScript!";
+console.log("Message:", message);
 // Compile & Run
 // tsc index.ts      # Compiles index.ts to index.js
 // node index.js     # Runs the compiled JS file

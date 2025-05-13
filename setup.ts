@@ -1,3 +1,7 @@
+// ==============================
+// PART 1: Basic Setup & Example
+// ==============================
+
 // Install TypeScript
 
 // npm install -g typescript
@@ -5,14 +9,11 @@
 // You can now use the tsc command in your terminal.
 // tsc stands for TypeScript Compiler.
 
-
-
 // Check Installation
 
 // tsc --version
 // Confirms installation and shows the installed version.
 // Make sure it prints something like 5.x.x.
-
 
 //  Initialize a Project
 
@@ -21,15 +22,14 @@
 // npm init -y
 // tsc --init
 
-
 //  Create First TS File
 
 // touch index.ts
 // Inside index.ts, write:
-// let message: string = "Hello TypeScript!";
-// console.log(message);
 
-
+// Declaring a string variable with explicit type annotation
+let message: string = "Hello TypeScript!";
+console.log("Message:", message);
 
 // Compile & Run
 
