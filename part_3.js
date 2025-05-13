@@ -1,6 +1,8 @@
 // ================================
 // PART 3: Functions & Type Annotations
 // ================================
+
+
 // ---------- Function with Parameter & Return Type ----------
 function add(a, b) {
     return a + b;
@@ -27,12 +29,15 @@ function greetUser(name) {
 }
 console.log(greetUser()); // Output: Hello, Guest
 console.log(greetUser("Raju")); // Output: Hello, Raju
+
 // ---------- Arrow Function with Type Annotations ----------
 var multiply = function (a, b) {
     return a * b;
 };
 console.log("Multiply(4, 6):", multiply(4, 6)); // Output: 24
+
 // ---------- Type Inference ----------
+
 var score = 100; // Inferred as number
 var username = "Raju"; // Inferred as string
 // score = "wrong";    // ❌ Error: Type 'string' is not assignable to type 'number'
