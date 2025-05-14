@@ -1,117 +1,58 @@
 // ===================================================
-// PART 7: Classes, Inheritance, and Access Modifiers
+// Single Example: Vehicle and ElectricVehicle Classes
 // ===================================================
 
-// ----------- Basic Class Example -----------
-class Student {
-  fullName: string;
+class Vehicle {
+  protected vehicleModel: string;
+  private vehicleYear: number;
 
-  constructor(fullName: string) {
-    this.fullName = fullName;
+  constructor(vehicleModel: string, vehicleYear: number) {
+    this.vehicleModel = vehicleModel;
+    this.vehicleYear = vehicleYear;
   }
 
-  introduce(): void {
-    console.log(`Hello, my name is ${this.fullName}`);
-  }
-}
-
-const student = new Student("Aria");
-student.introduce();  // Output: Hello, my name is Aria
-
-// ----------- Inheritance Example -----------
-class Machine {
-  protected model: string;
-
-  constructor(model: string) {
-    this.model = model;
+  public startEngine(): void {
+    console.log(`${this.vehicleModel} engine is starting...`);
   }
 
-  operate(hours: number): void {
-    console.log(`${this.model} operated for ${hours} hours.`);
+  public getYearOfManufacture(): number {
+    return this.vehicleYear;
   }
 }
 
-class Excavator extends Machine {
-  dig(): void {
-    console.log("Digging the ground! 🚜");
-  }
-}
+class ElectricVehicle extends Vehicle {
+  private chargeLevel: number;
 
-const excavator = new Excavator("CAT 320D");
-excavator.dig();   // Digging the ground! 🚜
-excavator.operate(5); // CAT 320D operated for 5 hours.
-
-// ----------- Access Modifiers Example -----------
-// Access Modifiers: public, private, protected
-
-class Smartphone {
-  public brand: string;
-  private releaseYear: number;
-  protected batteryLevel: number;
-
-  constructor(brand: string, releaseYear: number) {
-    this.brand = brand;
-    this.releaseYear = releaseYear;
-    this.batteryLevel = 100;
+  constructor(vehicleModel: string, vehicleYear: number, chargeLevel: number) {
+    super(vehicleModel, vehicleYear);
+    this.chargeLevel = chargeLevel;
   }
 
-  usePhone(hours: number): void {
-    this.batteryLevel -= hours * 10;
-    console.log(`${this.brand} phone used for ${hours} hours. Battery level: ${this.batteryLevel}%`);
+  public recharge(): void {
+    this.chargeLevel = 100;
+    console.log(`${this.vehicleModel} is now fully charged!`);
   }
 
-  getReleaseYear(): number {
-    return this.releaseYear;
-  }
-}
-
-const smartphone = new Smartphone("Samsung", 2023);
-smartphone.usePhone(3);  // Samsung phone used for 3 hours. Battery level: 70%
-
-console.log(smartphone.brand);  // Accessible because it's public
-// console.log(smartphone.releaseYear); // ❌ Error: 'releaseYear' is private
-// console.log(smartphone.batteryLevel); // ❌ Error: 'batteryLevel' is protected
-
-// ----------- Readonly and Parameter Properties -----------
-// Using readonly to make properties immutable
-class Laptop {
-  constructor(public model: string, private readonly manufactureYear: number) {}
-
-  getLaptopInfo(): string {
-    return `${this.model}, manufactured in ${this.manufactureYear}`;
-  }
-}
-
-const myLaptop = new Laptop("MacBook Pro", 2022);
-console.log(myLaptop.getLaptopInfo()); // MacBook Pro, manufactured in 2022
-
-// myLaptop.manufactureYear = 2023; // ❌ Error: Cannot assign to 'manufactureYear' because it is a read-only property.
-
-// ----------- Getters and Setters Example -----------
-// Using getter and setter to manage properties
-class Product {
-  private _cost: number;
-
-  constructor(private name: string, cost: number) {
-    this._cost = cost;
-  }
-
-  get cost(): number {
-    return this._cost;
-  }
-
-  set cost(newCost: number) {
-    if (newCost < 0) {
-      console.log("Cost cannot be negative");
+  public startEngine(): void {
+    if (this.chargeLevel > 0) {
+      console.log(`${this.vehicleModel} is starting silently... 🚗⚡`);
     } else {
-      this._cost = newCost;
+      console.log(`Cannot start ${this.vehicleModel}, battery is empty.`);
     }
   }
+
+  public getChargeLevel(): number {
+    return this.chargeLevel;
+  }
 }
 
-const newProduct = new Product("Smartwatch", 250);
-console.log(newProduct.cost); // 250
+// Create a new ElectricVehicle instance
+const myElectricVehicle = new ElectricVehicle("Nissan Leaf", 2020, 60);
 
-newProduct.cost = -100;  // Cost cannot be negative
-newProduct.cost = 300;   // Valid cost update
-console.log(newProduct.cost); // 300
+// Use methods from both Vehicle and ElectricVehicle classes
+myElectricVehicle.startEngine();  // Output: Nissan Leaf is starting silently... 🚗⚡
+myElectricVehicle.recharge();     // Output: Nissan Leaf is now fully charged!
+myElectricVehicle.startEngine();  // Output: Nissan Leaf is starting silently... 🚗⚡
+
+console.log(`Year of manufacture: ${myElectricVehicle.getYearOfManufacture()}`); // Accessing method from Vehicle class
+console.log(`Charge level: ${myElectricVehicle.getChargeLevel()}%`);  // Accessing method from ElectricVehicle class

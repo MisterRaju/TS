@@ -1,5 +1,5 @@
 // ===================================================
-// PART 7: Classes, Inheritance, and Access Modifiers
+// Single Example: Vehicle and ElectricVehicle Classes
 // ===================================================
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -16,104 +16,48 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-// ----------- Basic Class Example -----------
-var Student = /** @class */ (function () {
-    function Student(fullName) {
-        this.fullName = fullName;
+var Vehicle = /** @class */ (function () {
+    function Vehicle(vehicleModel, vehicleYear) {
+        this.vehicleModel = vehicleModel;
+        this.vehicleYear = vehicleYear;
     }
-    Student.prototype.introduce = function () {
-        console.log("Hello, my name is ".concat(this.fullName));
+    Vehicle.prototype.startEngine = function () {
+        console.log("".concat(this.vehicleModel, " engine is starting..."));
     };
-    return Student;
+    Vehicle.prototype.getYearOfManufacture = function () {
+        return this.vehicleYear;
+    };
+    return Vehicle;
 }());
-var student = new Student("Aria");
-student.introduce(); // Output: Hello, my name is Aria
-// ----------- Inheritance Example -----------
-var Machine = /** @class */ (function () {
-    function Machine(model) {
-        this.model = model;
+var ElectricVehicle = /** @class */ (function (_super) {
+    __extends(ElectricVehicle, _super);
+    function ElectricVehicle(vehicleModel, vehicleYear, chargeLevel) {
+        var _this = _super.call(this, vehicleModel, vehicleYear) || this;
+        _this.chargeLevel = chargeLevel;
+        return _this;
     }
-    Machine.prototype.operate = function (hours) {
-        console.log("".concat(this.model, " operated for ").concat(hours, " hours."));
+    ElectricVehicle.prototype.recharge = function () {
+        this.chargeLevel = 100;
+        console.log("".concat(this.vehicleModel, " is now fully charged!"));
     };
-    return Machine;
-}());
-var Excavator = /** @class */ (function (_super) {
-    __extends(Excavator, _super);
-    function Excavator() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Excavator.prototype.dig = function () {
-        console.log("Digging the ground! 🚜");
+    ElectricVehicle.prototype.startEngine = function () {
+        if (this.chargeLevel > 0) {
+            console.log("".concat(this.vehicleModel, " is starting silently... \uD83D\uDE97\u26A1"));
+        }
+        else {
+            console.log("Cannot start ".concat(this.vehicleModel, ", battery is empty."));
+        }
     };
-    return Excavator;
-}(Machine));
-var excavator = new Excavator("CAT 320D");
-excavator.dig(); // Digging the ground! 🚜
-excavator.operate(5); // CAT 320D operated for 5 hours.
-// ----------- Access Modifiers Example -----------
-// Access Modifiers: public, private, protected
-var Smartphone = /** @class */ (function () {
-    function Smartphone(brand, releaseYear) {
-        this.brand = brand;
-        this.releaseYear = releaseYear;
-        this.batteryLevel = 100;
-    }
-    Smartphone.prototype.usePhone = function (hours) {
-        this.batteryLevel -= hours * 10;
-        console.log("".concat(this.brand, " phone used for ").concat(hours, " hours. Battery level: ").concat(this.batteryLevel, "%"));
+    ElectricVehicle.prototype.getChargeLevel = function () {
+        return this.chargeLevel;
     };
-    Smartphone.prototype.getReleaseYear = function () {
-        return this.releaseYear;
-    };
-    return Smartphone;
-}());
-var smartphone = new Smartphone("Samsung", 2023);
-smartphone.usePhone(3); // Samsung phone used for 3 hours. Battery level: 70%
-console.log(smartphone.brand); // Accessible because it's public
-// console.log(smartphone.releaseYear); // ❌ Error: 'releaseYear' is private
-// console.log(smartphone.batteryLevel); // ❌ Error: 'batteryLevel' is protected
-// ----------- Readonly and Parameter Properties -----------
-// Using readonly to make properties immutable
-var Laptop = /** @class */ (function () {
-    function Laptop(model, manufactureYear) {
-        this.model = model;
-        this.manufactureYear = manufactureYear;
-    }
-    Laptop.prototype.getLaptopInfo = function () {
-        return "".concat(this.model, ", manufactured in ").concat(this.manufactureYear);
-    };
-    return Laptop;
-}());
-var myLaptop = new Laptop("MacBook Pro", 2022);
-console.log(myLaptop.getLaptopInfo()); // MacBook Pro, manufactured in 2022
-// myLaptop.manufactureYear = 2023; // ❌ Error: Cannot assign to 'manufactureYear' because it is a read-only property.
-// ----------- Getters and Setters Example -----------
-// Using getter and setter to manage properties
-var Product = /** @class */ (function () {
-    function Product(name, cost) {
-        this.name = name;
-        this._cost = cost;
-    }
-    Object.defineProperty(Product.prototype, "cost", {
-        get: function () {
-            return this._cost;
-        },
-        set: function (newCost) {
-            if (newCost < 0) {
-                console.log("Cost cannot be negative");
-            }
-            else {
-                this._cost = newCost;
-            }
-        },
-        enumerable: false,
-        configurable: true
-    });
-    return Product;
-}());
-var newProduct = new Product("Smartwatch", 250);
-console.log(newProduct.cost); // 250
-newProduct.cost = -100; // Cost cannot be negative
-newProduct.cost = 300; // Valid cost update
-console.log(newProduct.cost); // 300
+    return ElectricVehicle;
+}(Vehicle));
+// Create a new ElectricVehicle instance
+var myElectricVehicle = new ElectricVehicle("Nissan Leaf", 2020, 60);
+// Use methods from both Vehicle and ElectricVehicle classes
+myElectricVehicle.startEngine(); // Output: Nissan Leaf is starting silently... 🚗⚡
+myElectricVehicle.recharge(); // Output: Nissan Leaf is now fully charged!
+myElectricVehicle.startEngine(); // Output: Nissan Leaf is starting silently... 🚗⚡
+console.log("Year of manufacture: ".concat(myElectricVehicle.getYearOfManufacture())); // Accessing method from Vehicle class
+console.log("Charge level: ".concat(myElectricVehicle.getChargeLevel(), "%")); // Accessing method from ElectricVehicle class
